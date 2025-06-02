@@ -1,0 +1,6 @@
+module and_gate_structural (
+    input A, B,
+    output Y
+);
+    and (Y, A, B);  // Instantiates an AND gate
+endmodule
