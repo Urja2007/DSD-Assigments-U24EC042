@@ -1,0 +1,12 @@
+// AND Gate - Behavioral Modeling
+module and_gate_behavioral (
+    input A, B,
+    output reg Y
+);
+
+always @ (A or B) begin
+    Y = A & B;
+end
+
+endmodule
+
