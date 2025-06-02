@@ -1,0 +1,6 @@
+module and_gate_dataflow (
+    input A, B,
+    output Y
+);
+    assign Y = A & B;  // Boolean logic expression
+endmodule
