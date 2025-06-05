@@ -1,4 +1,5 @@
-module and_gate_structural (
+//AND Gate - Structural Module
+module and_gate (
     input A, B,
     output Y
 );
