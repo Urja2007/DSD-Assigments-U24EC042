@@ -1,0 +1,20 @@
+`timescale 1ns/1ps
+module demux12_tb;
+  reg i, sel;
+  wire y0, y1;
+
+  demux12 DUT(.i(i), .sel(sel), .y0(y0), .y1(y1));
+
+  initial begin
+    $dumpfile("design.vcd");
+    $dumpvars(0, demux12_tb);
+    $monitor("Time=%0t | i=%b | sel=%b | y0=%b | y1=%b", $time, i, sel, y0, y1);
+
+    i = 1; sel = 0; #10;
+    i = 1; sel = 1; #10;
+    i = 0; sel = 0; #10;
+    i = 0; sel = 1; #10;
+
+    $finish;
+  end
+endmodule
