@@ -1,0 +1,14 @@
+// Half Adder module
+module ha(input A, B, output Sum, Carry);
+  assign Sum = A ^ B;
+  assign Carry = A & B;
+endmodule
+
+// Full Adder using two Half Adders and an OR gate
+module fa1(input A, B, Cin, output Sum, Cout);
+  wire sum1, c1, c2;
+
+  ha HA1(.A(A), .B(B), .Sum(sum1), .Carry(c1));
+  ha HA2(.A(sum1), .B(Cin), .Sum(Sum), .Carry(c2));
+  assign Cout = c1 | c2;
+endmodule
