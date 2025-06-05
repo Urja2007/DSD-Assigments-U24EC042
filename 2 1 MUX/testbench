@@ -1,0 +1,17 @@
+module mux21_tb;
+  reg [1:0]i, sel;
+  wire y;
+  
+  mux21 mux(y,sel,i);
+  initial begin
+    $dumpfile("design.vcd");
+    $dumpvars(0, mux21_tb);
+     $monitor("sel = %b, i = %b --> y = %b", sel, i, y);
+
+    i = 2'b01; sel = 0; #5;
+    sel = 1;            #5;
+    i = 2'b11; sel = 1; #5;
+    sel = 0;            #5;
+
+  end
+endmodule
