@@ -4,7 +4,7 @@ module ha_testbench;
   wire S, C;
 
   // DUT instantiation
-  ha DUT(S, C, a, b);
+  ha DUT(.a(a), .b(b), .S(S), .C(C));
 
   initial begin
     $dumpfile("design.vcd");
