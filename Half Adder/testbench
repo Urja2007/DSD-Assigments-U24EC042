@@ -1,0 +1,21 @@
+`timescale 1ns/1ps
+module ha_testbench;
+  reg a, b;
+  wire S, C;
+
+  // DUT instantiation
+  ha DUT(S, C, a, b);
+
+  initial begin
+    $dumpfile("design.vcd");
+    $dumpvars(0, ha_testbench);
+    $monitor($time, " a=%b b=%b => SUM=%b CARRY=%b", a, b, S, C);
+
+    a = 0; b = 0; #10;
+    a = 0; b = 1; #10;
+    a = 1; b = 0; #10;
+    a = 1; b = 1; #10;
+
+    $finish;
+  end
+endmodule
