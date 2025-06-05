@@ -1,0 +1,10 @@
+//half adder behaviorial modeling
+module ha(S, C, a, b);
+  input a, b;
+  output reg S, C;   // Outputs assigned in always → must be `reg`
+
+  always @(*) begin
+    S = a ^ b;
+    C = a & b;
+  end
+endmodule
