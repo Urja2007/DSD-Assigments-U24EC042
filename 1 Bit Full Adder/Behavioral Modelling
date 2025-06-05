@@ -1,0 +1,13 @@
+module fa1(A, B, Cin, Sum, Cout);
+  input A, B, Cin;
+  output reg Sum, Cout;
+  reg t1,t2,t3;
+  always @(*)
+    begin
+    Sum = A ^ B ^ Cin; // Verilog concatenation for full adder logic
+    t1 = A & B;
+    t2 = B & Cin;
+    t3 = A & Cin;
+    Cout = t1 | t2 | t3; 
+  end
+endmodule
