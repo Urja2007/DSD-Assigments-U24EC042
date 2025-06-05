@@ -1,0 +1,7 @@
+// half adder - dataflow type
+module ha(a, b, S, C);
+  input a, b;
+  output S, C;       // Use wire (default) for dataflow
+  assign S = a ^ b;  // XOR for sum
+  assign C = a & b;  // AND for carry
+endmodule
