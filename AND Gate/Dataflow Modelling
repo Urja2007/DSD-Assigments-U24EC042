@@ -1,6 +1,7 @@
-module and_gate_dataflow (
+//AND Gate - Dataflow Modelling
+module and_gate(
     input A, B,
     output Y
 );
-    assign Y = A & B;  // Boolean logic expression
+    assign Y = A & B;  
 endmodule
