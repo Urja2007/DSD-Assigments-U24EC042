@@ -1,0 +1,23 @@
+module decoder38_func_case (in,out);
+    input  [2:0] in;
+    output [7:0] out;
+
+    function [7:0] decoder;
+        input [2:0] sel;
+        begin
+            case (sel)
+                3'b000: decoder = 8'b00000001;
+                3'b001: decoder= 8'b00000010;
+                3'b010: decoder = 8'b00000100;
+                3'b011: decoder = 8'b00001000;
+                3'b100: decoder = 8'b00010000;
+                3'b101: decoder = 8'b00100000;
+                3'b110: decoder = 8'b01000000;
+                3'b111: decoder = 8'b10000000;
+            endcase
+        end
+    endfunction
+
+    assign out = decode_case(in);
+
+endmodule
