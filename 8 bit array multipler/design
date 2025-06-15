@@ -1,0 +1,17 @@
+module array_multiplier_8bit (
+    input  [7:0] A,
+    input  [7:0] B,
+    output [15:0] P
+);
+    wire [7:0][7:0] pp;  // 2D array of partial products
+    genvar i, j;
+
+    // Generate partial products
+    generate
+        for (i = 0; i < 8; i = i + 1) begin : pp_row
+            for (j = 0; j < 8; j = j + 1) begin : pp_col
+                assign pp[i][j] = A[j] & B[i];
+            end
+        end
+    endgenerate
+...........................................................
