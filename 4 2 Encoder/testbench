@@ -1,0 +1,24 @@
+`timescale 1ns / 1ps
+
+module encoder42_tb;
+  reg in0, in1, in2, in3;
+  wire out0, out1;
+
+  encoder42 dut (.in0(in0), .in1(in1), .in2(in2), .in3(in3),
+                 .out0(out0), .out1(out1));
+
+  initial begin
+    $dumpfile("encoder42.vcd");
+    $dumpvars(0, encoder42_tb);
+    $monitor("%g\t  %b   %b   %b   %b  |   %b    %b",
+              $time, in3, in2, in1, in0, out1, out0);
+
+    in0 = 1; in1 = 0; in2 = 0; in3 = 0; #10;  
+    in0 = 0; in1 = 1; in2 = 0; in3 = 0; #10;
+    in0 = 0; in1 = 0; in2 = 1; in3 = 0; #10;  
+    in0 = 0; in1 = 0; in2 = 0; in3 = 1; #10; 
+    in0 = 0; in1 = 0; in2 = 1; in3 = 1; #10;  
+    $finish;
+  end
+endmodule
+
