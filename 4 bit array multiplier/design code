@@ -1,0 +1,63 @@
+// Half Adder Module
+module half_adder(input a, input b, output sum, output carry);
+    assign sum = a ^ b;
+    assign carry = a & b;
+endmodule
+
+// Full Adder Module
+module full_adder(input a, input b, input cin, output sum, output carry);
+    assign sum = a ^ b ^ cin;
+    assign carry = (a & b) | (b & cin) | (cin & a);
+endmodule
+
+
+// 4-bit array multiplier with 4 HA, 8 FA
+module array_multiplier_4bit (
+    input  [3:0] A,
+    input  [3:0] B,
+    output [7:0] P
+);
+
+    wire [15:0] pp;  // Partial products
+    assign pp[ 3:0] = A & {4{B[0]}};
+    assign pp[ 7:4] = A & {4{B[1]}};
+    assign pp[11:8] = A & {4{B[2]}};
+    assign pp[15:12]= A & {4{B[3]}};
+
+    // Internal wires for sums and carries
+    wire s1, c1, s2, c2, s3, c3;
+    wire s4, c4, s5, c5, s6, c6, s7, c7;
+    wire s8, c8, s9, c9, s10, c10, s11, c11;
+    wire s12, c12;
+
+    // Row 0
+    assign P[0] = pp[0]; // A[0] & B[0]
+
+    // Row 1
+    half_adder ha1 (pp[1], pp[4], s1, c1);
+    full_adder fa1 (pp[2], pp[5], c1, s2, c2);
+    full_adder fa2 (pp[3], pp[6], c2, s3, c3);
+    full_adder fa3 (0,    pp[7], c3, s4, c4); // padding 0
+
+    // Row 2
+    half_adder ha2 (s2, pp[8], s5, c5);
+    full_adder fa4 (s3, pp[9], c5, s6, c6);
+    full_adder fa5 (s4, pp[10], c6, s7, c7);
+    full_adder fa6 (c4, pp[11], c7, s8, c8);
+
+    // Row 3
+    half_adder ha3 (s6, pp[12], s9, c9);
+    full_adder fa7 (s7, pp[13], c9, s10, c10);
+    full_adder fa8 (s8, pp[14], c10, s11, c11);
+    half_adder ha4 (c8, pp[15], s12, c12);
+
+    // Final Product Bits
+    assign P[1] = s1;
+    assign P[2] = s5;
+    assign P[3] = s9;
+    assign P[4] = s10;
+    assign P[5] = s11;
+    assign P[6] = s12;
+    assign P[7] = c12;
+
+endmodule
