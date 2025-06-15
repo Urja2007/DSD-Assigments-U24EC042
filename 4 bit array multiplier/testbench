@@ -1,0 +1,25 @@
+// Code your testbench here
+// or browse Examples
+// tb_array_multiplier_4bit.v
+`timescale 1ns / 1ps
+
+module tb_array_multiplier_4bit;
+    reg  [3:0] A, B;
+    wire [7:0] P;
+
+    array_multiplier_4bit uut (.A(A), .B(B), .P(P));
+
+    initial begin
+     
+        $dumpfile("array_multiplier_4bit.vcd"); 
+        $dumpvars(0, tb_array_multiplier_4bit);
+        $monitor("Time=%0t A=%b B=%b => Product=%b (%0d)", $time, A, B, P, P);
+
+        A = 4'd3;  B = 4'd2;  #10;
+        A = 4'd7;  B = 4'd5;  #10;
+        A = 4'd9;  B = 4'd9;  #10;
+        A = 4'd15; B = 4'd15; #10;
+        A = 4'd0;  B = 4'd14; #10;
+        $finish;
+    end
+endmodule
