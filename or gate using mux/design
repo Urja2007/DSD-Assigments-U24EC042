@@ -1,0 +1,11 @@
+module or_using_mux (
+    input [1:0] in,
+    output reg y
+);
+    always @(*) begin
+        if (in[1])
+            y = 1'b1;
+        else
+            y = in[0];
+    end
+endmodule
