@@ -1,0 +1,5 @@
+module not_gate_using_mux(
+    input in,
+    output out);
+    assign out = in ? 1'b0 : 1'b1;
+endmodule
