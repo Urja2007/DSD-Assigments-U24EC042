@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module or_using_mux_tb;
+    reg [1:0] in;
+    wire y;
+    or_using_mux dut (
+        .in(in),
+        .y(y)
+    );
+
+    initial begin
+        $dumpfile("or_using_mux.vcd");
+        $dumpvars(0, or_using_mux_tb);
+        $monitor("%0t\t%b\t%b\t|\t%b", $time, in[1], in[0], y);
+
+        in = 2'b00; #10;
+        in = 2'b01; #10;
+        in = 2'b10; #10;
+        in = 2'b11; #10;
+
+        $finish;
+    end
+
+endmodule
