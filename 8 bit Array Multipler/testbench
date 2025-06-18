@@ -1,0 +1,24 @@
+`timescale 1ns / 1ps
+
+module array_multiplier_8_tb;
+
+  reg [7:0] A, B;
+  wire [15:0] P;
+    array_multiplier_8 uut (
+        .A(A),
+        .B(B),
+        .P(P)
+    );
+
+    initial begin
+      $dumpfile("array_multiplier_8_tb.vcd");
+      $dumpvars(0, array_multiplier_8_tb);
+      $monitor("Time=%0t | A=%d, B=%d => P=%d(%b)", $time, A, B, P,P);
+        A = 8'b00000000;  B = 8'b00001111;  #10; // A = 0      
+        A = 8'b00000001;  B = 8'b00000001;  #10; // A = 1      B = 1
+        A = 8'b11111111;  B = 8'b11111111;  #10; // A = 255    B = 255
+        A = 8'b10000000;  B = 8'b00000010;  #10; // A = 128    B = 2
+       $finish;
+    end
+
+endmodule
