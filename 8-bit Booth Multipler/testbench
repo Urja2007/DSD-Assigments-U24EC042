@@ -1,0 +1,30 @@
+// Code your testbench here
+// or browse Examples
+`timescale 1ns / 1ps
+
+module booths_multiplier_tb;
+    reg signed [7:0] M;
+    reg signed [7:0] Q;
+    wire signed [15:0] product;
+
+    booths_multiplier uut (
+        .M(M),
+        .Q(Q),
+        .product(product)
+    );
+
+    initial begin
+        $dumpfile("booths_multiplier_.vcd");
+        $dumpvars(0, booths_multiplier_tb);
+        $monitor("Time=%0t | M = %0d (%b), Q = %0d (%b), Product = %0d (%b)", 
+                  $time, M, M, Q, Q, product, product);
+        M = 8'b00000101; Q = 8'b00000011;  #10; //  5 *  3
+        M = 8'b11111011; Q = 8'b00000011;  #10; // -5 *  3
+        M = 8'b00000101; Q = 8'b11111101;  #10; //  5 * -3
+        M = 8'b11111011; Q = 8'b11111101;  #10; // -5 * -3
+        M = 8'b00000000; Q = 8'b00000111;  #10; //  0 *  7
+        M = 8'b00001111; Q = 8'b00001111;  #10; // 15 * 15
+        $finish;
+    end
+
+endmodule
