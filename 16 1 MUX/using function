@@ -1,1 +1,18 @@
+module mux161 (
+    input  [15:0] in,
+    input  [3:0] sel,
+    output       y
+);
+
+    assign y = mux_func(in, sel); 
+
+    function mux_func;
+        input [15:0] in;
+        input [3:0] sel;
+        begin
+            mux_func = in[sel];     
+        end
+    endfunction
+
+endmodule
 
