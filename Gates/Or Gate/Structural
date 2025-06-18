@@ -1,0 +1,6 @@
+// Code your design here
+module gates (y,a,b);
+  input a,b;
+  output y;
+  or G(y,a,b);
+endmodule
