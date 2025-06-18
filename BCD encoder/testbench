@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+
+module tb_bcd_encoder;
+
+    reg  [15:0] D;
+    wire [3:0] Y;
+
+    bcd_encoder uut (.D(D), .Y(Y));
+    initial begin
+        $dumpfile("bcd_encoder.vcd");
+        $dumpvars(0, tb_bcd_encoder);
+        $display("Time\tInput D\t\tOutput Y");
+        $monitor("%0t\t%b\t%b", $time, D, Y);
+        D = 16'b0000000000000001; #10;
+        D = 16'b0000000000000010; #10;
+        D = 16'b0000000000000100; #10;
+        $finish;
+    end
+
+endmodule
