@@ -1,0 +1,32 @@
+module booths_multiplier (
+  input signed [15:0] M,  // Multiplicand
+  input signed [15:0] Q,  // Multiplier
+  output reg signed [31:0] product
+);
+
+    integer i;
+  reg signed [15:0] A;
+  reg signed [15:0] Q_reg;
+    reg Q_1;
+  reg signed [15:0] M_reg;
+
+    always @(*) begin
+        A = 16'd0;
+        Q_reg = Q;
+        Q_1 = 1'b0;       // Initialize Q-1 as 0
+        M_reg = M;
+
+      for (i = 0; i < 16; i = i + 1) begin
+            case ({Q_reg[0], Q_1})
+                2'b01: A = A + M_reg;  // Add
+                2'b10: A = A - M_reg;  // Subtract
+            endcase
+
+            // Arithmetic right shift A, Q, Q-1
+        {A, Q_reg, Q_1} = {A[15], A, Q_reg, Q_1} >> 1;
+        end
+
+        product = {A, Q_reg};  // Final 16-bit signed result
+    end
+
+endmodule
