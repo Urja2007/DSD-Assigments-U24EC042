@@ -1,0 +1,47 @@
+// Code your design here
+module tff (
+    input clk,
+    input reset,
+    input t,
+    output reg q
+);
+    always @(posedge clk or posedge reset) begin
+        if (reset)
+            q <= 0;
+        else if (t)
+            q <= ~q;
+    end
+endmodule
+
+module async_up_counter_3bit (
+    input clk,
+    input reset,
+    output [2:0] count
+);
+
+    wire q0, q1, q2;
+
+    tff TFF0 (
+        .clk(clk),
+        .reset(reset),
+        .t(1'b1),
+        .q(q0)
+    );
+
+    tff TFF1 (
+        .clk(~q0),  // Inverted output for down counting
+        .reset(reset),
+        .t(1'b1),
+        .q(q1)
+    );
+
+    tff TFF2 (
+        .clk(~q1),  // Inverted output for down counting
+        .reset(reset),
+        .t(1'b1),
+        .q(q2)
+    );
+
+    assign count = {q2, q1, q0};
+
+endmodule
