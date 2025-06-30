@@ -1,0 +1,37 @@
+// Code your testbench here
+// or browse Examples
+module tb_async_down_counter_3bit;
+
+    reg clk;
+    reg reset;
+    wire [3:0] count;
+
+    async_down_counter_3bit uut (
+        .clk(clk),
+        .reset(reset),
+        .count(count)
+    );
+
+    // Clock generation
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;  // 10 time units clock period
+    end
+
+    
+    initial begin
+      
+      $dumpfile("async_down_counter_3bit.vcd");       // Name of the VCD file
+      $dumpvars(0, tb_async_down_counter_3bit); // Dump all variables in this module
+        $display("Time\tReset\tCount");
+        $monitor("%0d\t%b\t%04b", $time, reset, count);
+
+        reset = 1;
+        #10;
+        reset = 0;
+
+        // Let the counter run for 20 clock cycles
+        #100;
+
+        $finish;
+    end
