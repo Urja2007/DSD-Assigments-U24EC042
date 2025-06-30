@@ -1,0 +1,44 @@
+// Code your design here
+module tff (
+    input clk,
+    input reset,
+    input t,
+    output reg q
+);
+    always @(posedge clk or posedge reset) begin
+        if (reset)
+            q <= 0;
+        else if (t)
+            q <= ~q;
+    end
+endmodule
+
+module bcdsyn (
+    input clk,
+    input reset,
+    output [3:0] count
+);
+
+    wire t0, t1, t2, t3;
+    wire q0, q1, q2, q3;
+    wire [3:0] count_internal;
+
+    assign t0 = 1;               // Q0 toggles on every clock
+    assign t1 = q0;              // Q1 toggles when Q0=1
+    assign t2 = q0 & q1;         // Q2 toggles when Q0 and Q1 are 1
+    assign t3 = q0 & q1 & q2;    // Q3 toggles when Q0, Q1, Q2 are 1
+
+    assign count_internal = {q3, q2, q1, q0};
+
+    // Reset if count reaches 1001 (decimal 9)
+    wire reset_condition = (count_internal == 4'b1001);
+    wire total_reset = reset | reset_condition;
+
+    // Instantiate T flip-flops
+    tff TFF0(clk, total_reset, t0, q0);
+    tff TFF1(clk, total_reset, t1, q1);
+    tff TFF2(clk, total_reset, t2, q2);
+    tff TFF3(clk, total_reset, t3, q3);
+
+    assign count = {q3, q2, q1, q0};
+endmodule
